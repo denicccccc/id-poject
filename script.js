@@ -1,7 +1,7 @@
 const API_URL = 'http://localhost:3000/students';
 
 const getBtn = document.getElementById('get-students-btn');
-const tableBody = document.querySelector('#students-table tbody');
+const tableBody = document.getElementById('students-body');
 const form = document.getElementById('add-student-form');
 
 
@@ -11,7 +11,7 @@ async function getStudents() {
     const students = await res.json();
     renderStudents(students);
   } catch (error) {
-    console.error('Помилка GET:', error);
+    console.error('GET error:', error);
   }
 }
 
@@ -61,13 +61,13 @@ async function addStudent(e) {
     form.reset();
     getStudents();
   } catch (error) {
-    console.error('Помилка POST:', error);
+    console.error('POST error:', error);
   }
 }
 
 
 async function updateStudent(id) {
-  const newName = prompt('Нове імʼя:');
+  const newName = prompt('Введи нове імʼя');
   if (!newName) return;
 
   try {
@@ -79,7 +79,7 @@ async function updateStudent(id) {
 
     getStudents();
   } catch (error) {
-    console.error('Помилка PATCH:', error);
+    console.error('PATCH error:', error);
   }
 }
 
@@ -88,13 +88,10 @@ async function deleteStudent(id) {
   if (!confirm('Ви впевнені?')) return;
 
   try {
-    await fetch(`${API_URL}/${id}`, {
-      method: 'DELETE'
-    });
-
+    await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
     getStudents();
   } catch (error) {
-    console.error('Помилка DELETE:', error);
+    console.error('DELETE error:', error);
   }
 }
 
